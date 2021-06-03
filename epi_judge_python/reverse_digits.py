@@ -3,7 +3,15 @@ from test_framework import generic_test
 
 def reverse(x: int) -> int:
     # TODO - you fill in here.
-    return 0
+
+    if x < 0:
+        x = str(x * -1)
+        sign = "-"
+    else:
+        x = str(x)
+        sign = ""
+    
+    return int(sign + x[::-1])
 
 
 if __name__ == '__main__':
