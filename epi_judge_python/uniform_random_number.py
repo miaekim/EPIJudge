@@ -6,14 +6,24 @@ from test_framework.random_sequence_checker import (
     check_sequence_is_uniformly_random, run_func_with_retries)
 from test_framework.test_utils import enable_executor_hook
 
+import math
 
 def zero_one_random():
     return random.randrange(2)
 
-
 def uniform_random(lower_bound: int, upper_bound: int) -> int:
-    # TODO - you fill in here.
-    return 0
+    binary_digit = math.ceil(math.log2(upper_bound)) + 1 # 2 -> 2, 3 -> 2, 4 -> 3, 8 -> 4, 16 -> 5
+    range_ = upper_bound - lower_bound
+    number = 0
+    while binary_digit:
+        number = (number << 1) | zero_one_random()
+        binary_digit = binary_digit - 1
+
+        if number > range_:
+            number = 0
+            binary_digit = math.ceil(math.log2(upper_bound))
+            
+    return number + lower_bound
 
 
 @enable_executor_hook
