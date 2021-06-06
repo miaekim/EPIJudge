@@ -5,16 +5,11 @@ from test_framework import generic_test
 
 def buy_and_sell_stock_once(prices: List[float]) -> float:
 
-    buy_price = prev_price = prices[0]
-    sell_price = None
+    buy_price = float('inf')
     profit = 0
-    for price in prices[1:]:
-        if price > prev_price:
-            sell_price = prev_price = price
-            profit = max(profit, sell_price - buy_price)
-        elif price < buy_price:
-            buy_price = prev_price = price
-            sell_price = None
+    for price in prices:
+        buy_price = min(buy_price, price)
+        profit = max(profit, price - buy_price)
     return profit
 
 
