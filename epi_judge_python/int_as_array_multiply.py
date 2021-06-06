@@ -15,13 +15,12 @@ def multiply(num1: List[int], num2: List[int]) -> List[int]:
         num2_sign = -1
 
     num3 = [0] * (len(num1) + len(num2))
-    for i in (range(len(num1))):
-        for j in (range(len(num2))):
-            num3[-(i+j+1)] += num1[-(i+1)] * num2[-(j+1)]
+    for i in reversed(range(len(num1))):
+        for j in reversed(range(len(num2))):
+            mul = num3[i+j+1] + num1[i] * num2[j]
+            num3[i+j+1] = mul % 10
+            num3[i+j] += mul // 10
 
-    carry = 0
-    for i in reversed(range(len(num3))):
-        num3[i], carry = (num3[i] + carry) % 10, (num3[i] + carry) // 10
     while num3[0] == 0 and len(num3) >= 2:
         num3 = num3[1:]
     num3[0] = num3[0] * num1_sign * num2_sign
