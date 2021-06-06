@@ -1,4 +1,3 @@
-from epi_judge_python.test_framework.test_failure import TestFailure
 from typing import List
 
 from test_framework import generic_test
