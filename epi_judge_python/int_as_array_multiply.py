@@ -4,8 +4,28 @@ from test_framework import generic_test
 
 
 def multiply(num1: List[int], num2: List[int]) -> List[int]:
-    # TODO - you fill in here.
-    return []
+    
+    num1_sign = 1
+    num2_sign = 1
+    if num1[0] < 0:
+        num1[0] *= -1
+        num1_sign = -1
+    if num2[0] < 0:
+        num2[0] *= -1
+        num2_sign = -1
+
+    num3 = [0] * (len(num1) + len(num2))
+    for i in (range(len(num1))):
+        for j in (range(len(num2))):
+            num3[-(i+j+1)] += num1[-(i+1)] * num2[-(j+1)]
+
+    carry = 0
+    for i in reversed(range(len(num3))):
+        num3[i], carry = (num3[i] + carry) % 10, (num3[i] + carry) // 10
+    while num3[0] == 0 and len(num3) >= 2:
+        num3 = num3[1:]
+    num3[0] = num3[0] * num1_sign * num2_sign
+    return num3
 
 
 if __name__ == '__main__':
