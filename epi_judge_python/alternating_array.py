@@ -5,10 +5,21 @@ from test_framework import generic_test
 from test_framework.test_failure import PropertyName, TestFailure
 from test_framework.test_utils import enable_executor_hook
 
-
 def rearrange(A: List[int]) -> None:
-    # TODO - you fill in here.
-    return
+    n = len(A)
+    for idx in range(0, n, 2):
+        if idx + 1 == n:
+            break
+
+        if A[idx] > A[idx + 1]:
+            A[idx], A[idx + 1] = A[idx + 1], A[idx]
+        
+        if idx + 2 == n:
+            break
+
+        if A[idx + 1] < A[idx + 2]:
+            A[idx +2], A[idx + 1] = A[idx + 1], A[idx + 2]
+
 
 
 @enable_executor_hook
