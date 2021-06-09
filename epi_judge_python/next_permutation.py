@@ -5,7 +5,9 @@ from test_framework import generic_test
 def next_perm(perm:List[int]) -> List[int]:
     for idx in range(len(perm) - 1, 0 - 1, -1):
         if perm[idx] > perm[0]:
-            return [perm[idx]] + sorted(perm[0:idx] + perm[idx +1:])
+            perm[0], perm[idx] = perm[idx], perm[0]
+            perm[1:] = reversed(perm[1:])
+            return perm
 
 def next_permutation(perm: List[int]) -> List[int]:
     n = len(perm)
