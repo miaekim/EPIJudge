@@ -12,7 +12,7 @@ from test_framework import generic_test
 def apply_permutation(perm: List[int], A: List[int]) -> None:
     # TODO - you fill in here.
     for i in range(len(perm)):
-        while i != perm[i]:
+        while i != A[perm[i]]:
             p = perm[i]
             A[i] , A[p] = A[p], A[i]
             perm[i], perm[p] = perm[p], perm[i]
