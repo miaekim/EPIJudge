@@ -8,11 +8,21 @@ from test_framework.random_sequence_checker import (
     check_sequence_is_uniformly_random, run_func_with_retries)
 from test_framework.test_utils import enable_executor_hook
 
+import random
 
 def compute_random_permutation(n: int) -> List[int]:
-    # TODO - you fill in here.
-    return []
+    if n <= 0:
+        return []
 
+    r = list(range(n))
+    result = []
+    
+    for _ in range(n):
+        pick = random.choice(r)
+        result.append(pick)
+        r.remove(pick)
+
+    return result
 
 @enable_executor_hook
 def compute_random_permutation_wrapper(executor, n):
