@@ -376,7 +376,7 @@ problem_mapping = {
                 "total": 6
             },
             "Python: random_permutation.py": {
-                "passed": 6,
+                "passed": 0,
                 "total": 6
             }
         },

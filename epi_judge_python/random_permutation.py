@@ -11,18 +11,9 @@ from test_framework.test_utils import enable_executor_hook
 import random
 
 def compute_random_permutation(n: int) -> List[int]:
-    if n <= 0:
-        return []
-
     r = list(range(n))
-    result = []
-    
-    for _ in range(n):
-        pick = random.choice(r)
-        result.append(pick)
-        r.remove(pick)
-
-    return result
+    random.shuffle(r)
+    return r 
 
 @enable_executor_hook
 def compute_random_permutation_wrapper(executor, n):
