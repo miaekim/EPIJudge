@@ -16,10 +16,6 @@ def online_random_sample(stream: Iterator[int], k: int) -> List[int]:
         if i == k - 1:
             break
 
-    for i in range(k):
-        idx = random.randint(i, k - 1)
-        result[idx], result[i] = result[i], result[idx]
-
     for i, s in enumerate(stream):
         idx = random.randint(0, k + i)
         if idx < k:
