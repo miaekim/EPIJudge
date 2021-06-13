@@ -8,16 +8,16 @@ from test_framework.test_utils import enable_executor_hook
 # ['r', 'a', 'm', ' ', 'i', 's', ' ', 'c', 'o', 's', 't', 'l', 'y'].
 def reverse_words(s):
     n = len(s)
-    splitted = "".join(s).split(" ")
-    splitted.reverse()
-    idx = 0
-    for word in splitted:
-        for x in word:
-            s[idx] = x
-            idx += 1
-        if idx < n:
-            s[idx] = ' '
-            idx += 1
+    s.reverse()
+    start = 0
+    for idx in range(n):
+        if s[idx] != ' ':
+            start = idx
+            break
+    for idx in range(start, n + 1):
+        if idx == n or s[idx] == ' ':
+            s[start:(None if idx == n else idx)] = s[idx - 1:(None if start - 1 < 0 else start - 1):-1]
+            start = idx + 1
     return
 
 
