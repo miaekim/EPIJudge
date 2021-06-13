@@ -1,15 +1,37 @@
+from string import digits
 from test_framework import generic_test
 from test_framework.test_failure import TestFailure
 
-
+DIGITS = "0123456789"
 def int_to_string(x: int) -> str:
-    # TODO - you fill in here.
-    return '0'
+    result = []
+    if x < 0:
+        sign = "-"
+        x = x * -1
+    else:
+        sign = ""
+
+    if x == 0:
+        return "0"
+
+    while x > 0:
+        for idx, d in enumerate(DIGITS):
+            if x % 10 == idx:
+                result.append(d)
+                break
+        x //= 10
+    return sign + "".join(reversed(result))
 
 
 def string_to_int(s: str) -> int:
-    # TODO - you fill in here.
-    return 0
+    result = 0
+    sign = -1 if s[0] == "-" else 1
+    for s_idx, _s in enumerate(reversed(s)):
+        for d_idx, d in enumerate(DIGITS):
+            if _s == d:
+                result += (10 ** s_idx) * d_idx
+                break
+    return result * sign
 
 
 def wrapper(x, s):
