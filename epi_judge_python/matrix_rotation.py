@@ -16,6 +16,9 @@ def rotate_matrix(square_matrix: List[List[int]]) -> None:
             square_matrix[i][j], square_matrix[i][n-1-j] = square_matrix[i][n-1-j], square_matrix[i][j]
     return
 
+    for i in range(n //2):
+        for j in range(n // 2):
+            sq
 
 def rotate_matrix_wrapper(square_matrix):
     rotate_matrix(square_matrix)
