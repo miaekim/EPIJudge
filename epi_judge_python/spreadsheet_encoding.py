@@ -1,9 +1,8 @@
 from test_framework import generic_test
-
-
+import functools
+DIGITS = "_ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 def ss_decode_col_id(col: str) -> int:
-    # TODO - you fill in here.
-    return 0
+    return functools.reduce(lambda x, y: x*26 + DIGITS.index(y), col, 0)
 
 
 if __name__ == '__main__':
