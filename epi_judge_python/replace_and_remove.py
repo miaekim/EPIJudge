@@ -8,20 +8,29 @@ import functools
 def replace_and_remove(size: int, s: List[str]) -> int:
     final_size = size
     idx = 0
-    while idx < final_size:
+
+    a_count = 0
+    b_count = 0
+    while idx < size:
         if s[idx] == 'b':
-            for i in range(idx + 1, final_size):
-                s[i - 1] = s[i]
+            b_count += 1
             final_size -= 1
+        else:
+            if s[idx] == 'a':
+                a_count += 1
+            s[idx - b_count] = s[idx]
+        idx += 1
+
+    idx = final_size - 1
+    while a_count > 0:
         if s[idx] == 'a':
-            for i in reversed(range(idx + 1, final_size)):
-                s[i + 1] = s[i]
-            s[idx] = 'd'
-            s[idx + 1] = 'd'
+            s[idx + a_count] = 'd'
+            a_count -= 1
+            s[idx + a_count] = 'd'
             final_size += 1
-            idx += 2
-        if idx < final_size and s[idx] != 'a' and s[idx] != 'b':
-            idx += 1 
+        else:
+            s[idx + a_count] = s[idx]
+        idx -= 1
     return final_size
 
 
