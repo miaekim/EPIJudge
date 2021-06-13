@@ -27,10 +27,8 @@ def string_to_int(s: str) -> int:
     result = 0
     sign = -1 if s[0] == "-" else 1
     for s_idx, _s in enumerate(reversed(s)):
-        for d_idx, d in enumerate(DIGITS):
-            if _s == d:
-                result += (10 ** s_idx) * d_idx
-                break
+        if _s in DIGITS:
+            result += (10 ** s_idx) * DIGITS.index(_s)
     return result * sign
 
 
