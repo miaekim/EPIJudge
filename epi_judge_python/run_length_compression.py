@@ -3,13 +3,31 @@ from test_framework.test_failure import TestFailure
 
 
 def decoding(s: str) -> str:
-    # TODO - you fill in here.
-    return ''
+    result = ''
+    count = ""
+    for idx in range(0, len(s)):
+        if s[idx] in "0123456789":
+            count += s[idx]
+        else:
+            cnt, symbol = int(count), s[idx]
+            result += symbol * cnt
+            count = ""
+    return result
 
 
 def encoding(s: str) -> str:
-    # TODO - you fill in here.
-    return ''
+    result = ''
+    if not s:
+        return
+    count = 1
+    for idx in reversed(range(1, len(s))):
+        if s[idx] == s[idx - 1]:
+            count += 1
+        else:
+            result = str(count) + s[idx] + result
+            count = 1
+    result = str(count) + s[0] + result
+    return result
 
 
 def rle_tester(encoded, decoded):
