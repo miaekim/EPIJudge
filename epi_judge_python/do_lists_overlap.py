@@ -73,17 +73,9 @@ def overlapping_lists(l0: ListNode, l1: ListNode) -> Optional[ListNode]:
     # print(l0_cycle, "and",l1_cycle) 
     l0_cycle_head, l1_cycle_head = l0_cycle, l1_cycle
     while l0_cycle and l1_cycle:
-        if l0_cycle.data == l1_cycle_head.data:
-            return l0_cycle
-        if l1_cycle.data == l0_cycle_head.data:
-            return l1_cycle
-
         l0_cycle = l0_cycle.next
-        l1_cycle = l1_cycle.next
-        if l0_cycle.data == l0_cycle_head.data:
-            return None
-        if l1_cycle.data == l1_cycle_head.data:
-            return None
+        if l0_cycle.data == l0_cycle_head.data or l0_cycle.data == l1_cycle_head.data:
+            return l1_cycle if l0_cycle.data == l1_cycle_head.data else None
 
     if l0_cycle is None and l1_cycle is None: 
         return overlapping_no_cycle_lists(l0, l1)
