@@ -5,8 +5,14 @@ from test_framework import generic_test
 
 
 def remove_duplicates(L: ListNode) -> Optional[ListNode]:
-    # TODO - you fill in here.
-    return None
+    head = L
+
+    while L:
+        while L.next and L.data == L.next.data:
+            L.next = L.next.next
+        L = L.next
+
+    return head
 
 
 if __name__ == '__main__':
