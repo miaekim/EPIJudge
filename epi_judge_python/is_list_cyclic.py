@@ -8,14 +8,25 @@ from test_framework.test_utils import enable_executor_hook
 
 
 def has_cycle(head: ListNode) -> Optional[ListNode]:
-    visited = {}
-    node = head
-    while node:
-        if node.data in visited:
-            return node
-        visited[node.data] = 1
-        node = node.next
-    return None
+    def cycle_len(end):
+        start, step = end, 0
+        while True:
+            step += 1
+            start = start.next
+            if start is end:
+                return step
+
+    fast = slow = head
+    while fast and fast.next:
+        slow, fast = slow.next, fast.next.next
+        if slow is fast:
+            it = head
+            # Both iterators advance in tandem.
+            while it is not slow:
+                it = it.next
+                slow = slow.next
+            return it  # iter is the start of cycle.
+    return None  # No cycle.
 
 
 @enable_executor_hook
