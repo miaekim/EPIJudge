@@ -6,7 +6,8 @@ from test_framework import generic_test
 def examine_buildings_with_sunset(sequence: Iterator[int]) -> List[int]:
     sunset = []
     for idx, height in enumerate(sequence):
-        sunset = [(idx, sun_height) for idx, sun_height in sunset if sun_height > height]
+        while sunset and sunset[-1][1] <= height:
+            sunset.pop()
         sunset.append((idx, height))
 
     return [idx for idx, _ in sunset[::-1]]
