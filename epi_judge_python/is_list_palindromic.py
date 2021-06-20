@@ -14,19 +14,17 @@ def is_linked_list_a_palindrome(L: ListNode) -> bool:
     if L is None:
         return True
     head = L
-    mid, tail, size = L, L, 0
+    mid, tail = L, L
     while tail and tail.next:
-        size += 1
         tail = tail.next.next
         mid = mid.next
 
     back = reverse(mid)
-    while size > 0:
+    while head and back:
         if head.data != back.data:
             return False
         head = head.next
         back = back.next
-        size -= 1
     return True
     
         
