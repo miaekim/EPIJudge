@@ -1,7 +1,15 @@
 from list_node import ListNode
 from test_framework import generic_test
 
-
+def reverse(L: ListNode) -> ListNode:
+    prev, curr = None, L
+    while curr:
+        next = curr.next
+        curr.next = prev
+        prev = curr
+        curr = next
+    return prev
+    
 def is_linked_list_a_palindrome(L: ListNode) -> bool:
     if L is None:
         return True
@@ -9,10 +17,17 @@ def is_linked_list_a_palindrome(L: ListNode) -> bool:
     mid, tail, size = L, L, 0
     while tail and tail.next:
         size += 1
-        nxt = tail.next
-        nxt.next = tail
-        tail = nxt
+        tail = tail.next.next
+        mid = mid.next
 
+    back = reverse(mid)
+    while size > 0:
+        if head.data != back.data:
+            return False
+        head = head.next
+        back = back.next
+        size -= 1
+    return True
     
         
     return True
