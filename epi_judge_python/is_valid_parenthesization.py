@@ -10,15 +10,9 @@ def is_well_formed(s: str) -> bool:
     for _s in s:
         if _s in match:
             stack.append(_s)
-        else:
-            if not stack:
-                return False
-            open = stack.pop()
-            if match[open] != _s:
-                return False
-    if stack:
-        return False
-    return True
+        elif not stack or match[stack.pop()] != _s:
+            return False
+    return not stack
 
 
 if __name__ == '__main__':
