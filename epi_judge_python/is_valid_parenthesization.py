@@ -1,8 +1,23 @@
 from test_framework import generic_test
 
-
+match = {
+    "(": ")",
+    "{": "}",
+    "[": "]"
+}
 def is_well_formed(s: str) -> bool:
-    # TODO - you fill in here.
+    stack = []
+    for _s in s:
+        if _s in match:
+            stack.append(_s)
+        else:
+            if not stack:
+                return False
+            open = stack.pop()
+            if match[open] != _s:
+                return False
+    if stack:
+        return False
     return True
 
 
