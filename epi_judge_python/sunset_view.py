@@ -4,8 +4,12 @@ from test_framework import generic_test
 
 
 def examine_buildings_with_sunset(sequence: Iterator[int]) -> List[int]:
-    # TODO - you fill in here.
-    return []
+    sunset = []
+    for idx, height in enumerate(sequence):
+        sunset = [(idx, sun_height) for idx, sun_height in sunset if sun_height > height]
+        sunset.append((idx, height))
+
+    return [idx for idx, _ in sunset[::-1]]
 
 
 def examine_buildings_with_sunset_wrapper(sequence):
