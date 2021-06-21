@@ -6,20 +6,37 @@ from collections import deque
 class Queue:
     def __init__(self, capacity: int) -> None:
         self.capacity = capacity
+        self._head = self._tail = -1
         self._size = 0
-        self.queue = deque([])
+        self.queue = [0] * capacity
         return
 
     def enqueue(self, x: int) -> None:
-        # if self.size == self.capacity:
-        #     self.dequeue()
-        self.queue.append(x)
+        if self._head == (self._tail + 1) % self.capacity:
+            if self._head == 0:
+                self.queue.append(0)
+            else:
+                self.queue.insert(self._head, 0)
+                self._head += 1
+            self.capacity += 1
+        if self._head == -1 and self._tail == -1:
+            self._head = 0
+        self._tail = (self._tail + 1) % self.capacity
+        self.queue[self._tail] = x
         self._size += 1
         return
 
     def dequeue(self) -> int:
+        result = self.queue[self._head]
+        if self._size == 0:
+            raise Exception("underflow")
+        elif self._head == self._tail:
+            self._head = self._tail = -1
+            self._size = 0
+            return result
+        self._head = (self._head + 1) % self.capacity
         self._size -= 1
-        return self.queue.popleft()
+        return result
 
     def size(self) -> int:
         return self._size
