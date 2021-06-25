@@ -7,29 +7,23 @@ from collections import deque
 from collections import namedtuple
 
 def inorder_traversal(tree: BinaryTreeNode) -> List[int]:
-    Node = namedtuple('Node', ('node', 'visited'))
+    Node = namedtuple('Node', ('node', 'left_visited'))
     if not tree:
         return []
-    traversal: List[Node] = deque([Node(node=tree, visited=0)])
-    to_visit = 1
+    traversal = []
+    to_visit = [Node(node=tree, left_visited=0)]
 
-    while to_visit > 0:
-        curr, node_idx = None, None
-        for idx, (node, visited) in enumerate(traversal):
-            if not visited:
-                curr = node
-                node_idx = idx
-                break
-        if curr.right:
-            traversal.insert(node_idx+1, Node(node=curr.right, visited = 0))
-            to_visit += 1
-        # traversal[node_idx].visited = 1
-        traversal[node_idx]  = Node(node=curr, visited = 1)
-        to_visit -= 1
-        if curr.left:
-            traversal.insert(node_idx, Node(node=curr.left, visited = 0))
-            to_visit += 1
-    return list(map(lambda x: x.node.data, traversal))
+    while to_visit:
+        node, left_visited = to_visit.pop()
+        if not node:
+            continue
+        if left_visited:
+            traversal.append(node.data)
+        else:
+            to_visit.append(Node(node=node.right, left_visited=0))
+            to_visit.append(Node(node=node, left_visited=1))
+            to_visit.append(Node(node=node.left, left_visited=0))
+    return traversal
 
 
 if __name__ == '__main__':
