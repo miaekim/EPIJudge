@@ -6,10 +6,29 @@ from test_framework import generic_test
 from test_framework.binary_tree_utils import must_find_node
 from test_framework.test_utils import enable_executor_hook
 
+def get_left(node: BinaryTreeNode) -> BinaryTreeNode:
+    while node.left:
+        node = node.left
+    return node
+
+def get_right_root(node: BinaryTreeNode) -> BinaryTreeNode:
+    while node.parent:
+        if node == node.parent.left:
+            return node.parent
+        else:
+            node = node.parent
+            
+    return None
+        
 
 def find_successor(node: BinaryTreeNode) -> Optional[BinaryTreeNode]:
-    # TODO - you fill in here.
-    return None
+    if not node:
+        return None
+    
+    if node.right:
+        return get_left(node.right)
+    else:
+        return get_right_root(node)
 
 
 @enable_executor_hook
