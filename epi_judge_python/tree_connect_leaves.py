@@ -6,10 +6,20 @@ from test_framework import generic_test
 from test_framework.test_failure import TestFailure
 from test_framework.test_utils import enable_executor_hook
 
-
 def create_list_of_leaves(tree: BinaryTreeNode) -> List[BinaryTreeNode]:
-    # TODO - you fill in here.
-    return []
+    leaves = []    
+    def traverse(node: BinaryTreeNode):
+        if node is None:
+            return
+        if node.left is None and node.right is None:
+            leaves.append(node)
+            return
+
+        traverse(node.left)
+        traverse(node.right)
+
+    traverse(tree)
+    return leaves
 
 
 @enable_executor_hook
