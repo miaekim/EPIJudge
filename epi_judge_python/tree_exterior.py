@@ -6,10 +6,28 @@ from test_framework import generic_test
 from test_framework.test_failure import TestFailure
 from test_framework.test_utils import enable_executor_hook
 
-
+from collections import deque
 def exterior_binary_tree(tree: BinaryTreeNode) -> List[BinaryTreeNode]:
-    # TODO - you fill in here.
-    return []
+    left = []
+    leaf = []
+    right = []
+    def traverse(node: BinaryTreeNode, is_left: bool, is_right: bool):
+        if node is None:
+            return
+        if is_left:
+            left.append(node)
+        elif is_right:
+            right.append(node)
+        elif node.left == None and node.right == None:
+            leaf.append(node)
+            return
+        
+        traverse(node.left, is_left, 0 if node.right or is_left else is_right)
+        traverse(node.right, 0 if node.left or is_right else is_left, is_right)
+        
+
+    traverse(tree, 1, 1)
+    return left + leaf + right[::-1]
 
 
 def create_output_list(L):
