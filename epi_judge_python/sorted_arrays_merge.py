@@ -1,11 +1,17 @@
 from typing import List
 
 from test_framework import generic_test
-
+import heapq
 
 def merge_sorted_arrays(sorted_arrays: List[List[int]]) -> List[int]:
-    # TODO - you fill in here.
-    return []
+    merged = [x for array in sorted_arrays for x in array]
+    heapq.heapify(merged)
+    result = []
+    while merged:
+        result.append(heapq.heappop(merged))
+    return result
+    
+    
 
 
 if __name__ == '__main__':
