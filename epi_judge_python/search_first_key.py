@@ -2,10 +2,13 @@ from typing import List
 
 from test_framework import generic_test
 
-
+import bisect
 def search_first_of_k(A: List[int], k: int) -> int:
-    # TODO - you fill in here.
-    return 0
+    result = bisect.bisect_left(A, k)
+    if not A or result == len(A) or A[result] != k:
+        return -1
+    else:
+        return result
 
 
 if __name__ == '__main__':
