@@ -4,16 +4,23 @@ from test_framework import generic_test, test_utils
 import heapq
 
 def k_largest_in_binary_heap(A: List[int], k: int) -> List[int]:
-    min_heap = []
-    heapq.heapify(min_heap)
-    min_heap_size = 0
-    for a in A:
-        heapq.heappush(min_heap, a)
-        min_heap_size += 1
-
-        if min_heap_size > k:
-            heapq.heappop(min_heap)
-    return min_heap
+    candidate = [(-A[0], 0)]
+    heapq.heapify(candidate)
+    n = len(A)
+    largest = []
+    largest_size = 0
+    while largest_size < k:
+        data, idx = heapq.heappop(candidate)
+        largest.append(-data)
+        largest_size += 1
+        first = 2*idx + 1
+        second = 2*idx + 2
+        if first < n:
+            heapq.heappush(candidate, (-A[first], first))
+        if second < n:
+            heapq.heappush(candidate, (-A[second], second))
+        
+    return largest
 
 
 if __name__ == '__main__':
