@@ -1,8 +1,22 @@
 from test_framework import generic_test
 
+from collections import defaultdict
+def can_form_palindrome(input: str) -> bool:
+    #  number of odd count character should be same or less than zero
+    dic = {}
+    for s in input:
+        if s and s in dic:
+            dic[s] += 1
+        else:
+            dic[s] = 1
 
-def can_form_palindrome(s: str) -> bool:
-    # TODO - you fill in here.
+    odd_cnt = 0
+    for _, v in dic.items():
+        if v % 2 == 1:
+            odd_cnt += 1
+        if odd_cnt > 1:
+            return False
+        
     return True
 
 
