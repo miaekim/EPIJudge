@@ -10,7 +10,20 @@ from test_framework.test_utils import enable_executor_hook
 
 def lca(node0: BinaryTreeNode,
         node1: BinaryTreeNode) -> Optional[BinaryTreeNode]:
-    # TODO - you fill in here.
+    node0_parents = set()
+    node1_parents = set()
+
+    while node0 is not None or node1 is not None:
+        if node0:
+            node0_parents.add(node0)
+            node0 = node0.parent
+        if node1:
+            node1_parents.add(node1)
+            node1 = node1.parent
+
+        intersection = node0_parents.intersection(node1_parents)
+        if len(intersection) > 0:
+            return intersection.pop()
     return None
 
 
@@ -30,3 +43,4 @@ if __name__ == '__main__':
         generic_test.generic_test_main(
             'lowest_common_ancestor_close_ancestor.py',
             'lowest_common_ancestor.tsv', lca_wrapper))
+

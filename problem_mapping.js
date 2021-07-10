@@ -1492,7 +1492,7 @@ problem_mapping = {
                 "total": 101
             },
             "Python: lru_cache.py": {
-                "passed": 0,
+                "passed": 15,
                 "total": 101
             }
         },
@@ -1506,7 +1506,7 @@ problem_mapping = {
                 "total": 948
             },
             "Python: lowest_common_ancestor_close_ancestor.py": {
-                "passed": 0,
+                "passed": 948,
                 "total": 948
             }
         },
