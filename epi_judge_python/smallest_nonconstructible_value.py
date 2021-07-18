@@ -4,8 +4,15 @@ from test_framework import generic_test
 
 
 def smallest_nonconstructible_value(A: List[int]) -> int:
-    # TODO - you fill in here.
-    return 0
+    A.sort()
+    value = 0
+    
+    for a in A:
+        if a > value + 1:
+            return value + 1
+        value += a
+
+    return value + 1
 
 
 if __name__ == '__main__':
