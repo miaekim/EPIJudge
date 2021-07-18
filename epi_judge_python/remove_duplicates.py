@@ -17,9 +17,12 @@ class Name:
 
 def eliminate_duplicate(A: List[Name]) -> None:
     A.sort()
-    for prev, curr in zip(A[:-1], A[1:]):
-        if prev.first_name == curr.first_name:
-            A.remove(curr)
+    write_idx = 0
+    for name_idx in range(0, len(A)):
+        if name_idx == 0 or A[name_idx - 1].first_name != A[name_idx].first_name:
+            A[write_idx] = A[name_idx]
+            write_idx += 1
+    del(A[write_idx:])
     return
 
 
