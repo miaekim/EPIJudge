@@ -8,11 +8,37 @@ from test_framework.test_utils import enable_executor_hook
 
 Interval = collections.namedtuple('Interval', ('left', 'right'))
 
+def is_overlay(left: Interval, right: Interval) -> bool:
+    if not right:
+        return False
+    if (left.right < right.left) or (right.right < left.left):
+        return False
+    return True
+
+def union(left: Interval, right: Interval):
+    if left.left > right.left:
+        left, right = right, left
+    if left.right < right.right:
+        return Interval(left=left.left, right=right.right)
+    else:
+        return left
 
 def add_interval(disjoint_intervals: List[Interval],
                  new_interval: Interval) -> List[Interval]:
-    # TODO - you fill in here.
-    return []
+    merged_intervals = []
+
+    for disjoint_interval in disjoint_intervals:
+        if is_overlay(disjoint_interval, new_interval):
+            new_interval = union(disjoint_interval, new_interval)
+        else:
+            if new_interval and new_interval.right < disjoint_interval.left:
+                merged_intervals.append(new_interval)
+                new_interval = None
+            merged_intervals.append(disjoint_interval)
+    
+    if new_interval:
+        merged_intervals.append(new_interval)
+    return merged_intervals
 
 
 @enable_executor_hook
