@@ -9,10 +9,34 @@ Endpoint = collections.namedtuple('Endpoint', ('is_closed', 'val'))
 
 Interval = collections.namedtuple('Interval', ('left', 'right'))
 
+# is endpoint1 less than endpoint2?
+def _lt(endpoint1, endpoint2):
+    if endpoint1.val < endpoint2.val:
+        return True
+    elif endpoint1.val > endpoint2.val:
+        return False
+
+    if not endpoint1.is_closed and endpoint2.is_closed:
+        return True
+    return False
 
 def union_of_intervals(intervals: List[Interval]) -> List[Interval]:
-    # TODO - you fill in here.
-    return []
+    if not intervals:
+        return []
+
+    intervals.sort(key=lambda x: x.left.val - int(x.left.is_closed) * 0.1)
+    unions = []
+    curr = intervals[0]
+    for interval in intervals[1:]:
+        if (curr.right.val > interval.left.val) or (curr.right.val == interval.left.val and (curr.right.is_closed or interval.left.is_closed)):
+            left_ = curr.left
+            right_ =  interval.right if(_lt(curr.right, interval.right)) else curr.right
+            curr = Interval(left_, right_)
+        else:
+            unions.append(curr)
+            curr = interval
+    unions.append(curr)
+    return unions
 
 
 @enable_executor_hook
