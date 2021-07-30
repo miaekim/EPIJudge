@@ -9,14 +9,10 @@ def find_first_greater_than_k(tree: BstNode, k: int) -> Optional[BstNode]:
     if not tree:
         return None
 
+    if tree.data <= k :
+        return find_first_greater_than_k(tree.right, k)
     key = find_first_greater_than_k(tree.left, k)
-    if key:
-        return key
-
-    if tree.data > k:
-        return tree
-
-    return find_first_greater_than_k(tree.right, k)
+    return key or tree
 
 
 def find_first_greater_than_k_wrapper(tree, k):
