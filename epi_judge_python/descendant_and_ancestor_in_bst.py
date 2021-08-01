@@ -9,8 +9,33 @@ from test_framework.test_utils import enable_executor_hook
 def pair_includes_ancestor_and_descendant_of_m(possible_anc_or_desc_0: BstNode,
                                                possible_anc_or_desc_1: BstNode,
                                                middle: BstNode) -> bool:
-    # TODO - you fill in here.
-    return True
+    # node 0 or node 1 try to find middle. 
+    # both find/cannot find -> return False
+    # one find. -> okay then middle find other node -> if found True, else False
+
+    def find_middle(root: BstNode, middle: BstNode) -> bool:
+        if root.data == middle.data:
+            return False
+        node = root
+        while node:
+            if middle.data < node.data:
+                node = node.left
+            elif middle.data > node.data:
+                node = node.right
+            else:
+                return True
+        return False
+
+    node_0_find_max = find_middle(possible_anc_or_desc_0, middle)
+    node_1_find_max = find_middle(possible_anc_or_desc_1, middle)
+
+    if node_0_find_max and not node_1_find_max:
+        return find_middle(middle, possible_anc_or_desc_1)
+
+    if node_1_find_max and not node_0_find_max:
+        return find_middle(middle, possible_anc_or_desc_0)
+
+    return False
 
 
 @enable_executor_hook
