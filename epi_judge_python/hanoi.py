@@ -7,10 +7,18 @@ from test_framework.test_utils import enable_executor_hook
 
 NUM_PEGS = 3
 
+def compute_tower_hanoi_to(num_rings: int, start: int, end: int) -> List[List[int]]:
+    midpoint = [x for x in range(NUM_PEGS) if x != start and x!= end][0]
+    if num_rings == 0:
+        return [[]]
+    if num_rings == 1:
+        return [[start,end]]
+
+    return compute_tower_hanoi_to(num_rings - 1, start, midpoint) + compute_tower_hanoi_to(1, start, end) + compute_tower_hanoi_to(num_rings -1, midpoint, end)
+
 
 def compute_tower_hanoi(num_rings: int) -> List[List[int]]:
-    # TODO - you fill in here.
-    return []
+    return compute_tower_hanoi_to(num_rings, 0, 1)
 
 
 @enable_executor_hook
