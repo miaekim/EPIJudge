@@ -9,7 +9,11 @@ Item = collections.namedtuple('Item', ('weight', 'value'))
 
 
 def optimum_subject_to_capacity(items: List[Item], capacity: int) -> int:
-    # TODO - you fill in here.
+    sorted(items, lambda x: x.weight)
+    memory = [[0] * (capacity+1)] * len(items)
+    for idx, item in enumerate(items):
+        for j in range(1, capacity):
+            memory[idx][j] = max(memory[idx][j - 1], memory[idx - item.weight][j] + item.value)
     return 0
 
 
