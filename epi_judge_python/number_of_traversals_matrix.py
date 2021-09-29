@@ -2,8 +2,14 @@ from test_framework import generic_test
 
 
 def number_of_ways(n: int, m: int) -> int:
-    # TODO - you fill in here.
-    return 0
+    memory = [[1] * m]
+    for _ in range(1, n):
+        memory.append([1] + ([0] * (m - 1)))
+
+    for row in range(1, n):
+        for col in range(1, m):
+            memory[row][col] = memory[row - 1][col] + memory[row][col - 1]
+    return memory[-1][-1]
 
 
 if __name__ == '__main__':
