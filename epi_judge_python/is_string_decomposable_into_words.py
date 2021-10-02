@@ -1,15 +1,54 @@
 import functools
 from typing import List, Set
-
+from collections import defaultdict
 from test_framework import generic_test
 from test_framework.test_failure import TestFailure
 from test_framework.test_utils import enable_executor_hook
-
-
+ 
+# 0  3  6  9  0  2
+# bedbathandbeyond.com
+# bed bath and beyond
+# bed bat hand beyond
+TRIE_END = "$"
 def decompose_into_dictionary_words(domain: str,
                                     dictionary: Set[str]) -> List[str]:
-    # TODO - you fill in here.
-    return []
+    n = len(domain)
+    trie = {}
+
+    for keyword in dictionary:
+        trie_ptr = trie
+        for key in keyword:
+            if key not in trie_ptr:
+                trie_ptr[key] = {}
+            trie_ptr = trie_ptr[key]
+        trie_ptr["$"] = {}
+
+    
+    def recursive(start: int, decompose: List[str]):
+        nonlocal n
+        nonlocal trie
+
+        print(start, decompose)
+        if start == n:
+            return decompose
+
+        trie_ptr = trie
+
+        for i in range(start, n):
+            if domain[start:i]
+
+        # for i in range(start, n):
+        #     if TRIE_END in trie_ptr:
+        #         r_decompose = recursive(i, decompose + [domain[start:i]])
+        #         if r_decompose:
+        #             return r_decompose
+        #     if domain[i] in trie_ptr:
+        #         trie_ptr = trie_ptr[domain[i]]
+        #     elif TRIE_END not in trie_ptr:
+        #         break
+        return []
+
+    return recursive(0, [])
 
 
 @enable_executor_hook
