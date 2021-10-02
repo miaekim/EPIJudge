@@ -7,18 +7,18 @@ def maximum_revenue(coins: List[int]) -> int:
     @functools.lru_cache(None)
     def max_recursive(start, end):
         nonlocal coins
-        if start == end:
-            return coins[start]
-
-        return max(coins[start] + min_recursive(start + 1, end), coins[end] + min_recursive(start, end - 1))
-    @functools.lru_cache(None)
-    def min_recursive(start, end):
-        nonlocal coins
-        if start == end:
+        if start > end:
             return 0
 
-        return min(max_recursive(start + 1, end), max_recursive(start, end - 1))
-    
+        select_start = coins[start] + min(
+            max_recursive(start + 2, end),
+            max_recursive(start + 1, end -1)
+        )
+        select_end = coins[end] + min(
+            max_recursive(start + 1, end - 1),
+            max_recursive(start, end -2)
+        )
+        return max(select_start, select_end)
     return max_recursive(0, len(coins) - 1)
 
 
