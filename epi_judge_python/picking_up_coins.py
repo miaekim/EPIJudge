@@ -1,11 +1,25 @@
 from typing import List
-
+import functools
 from test_framework import generic_test
 
 
 def maximum_revenue(coins: List[int]) -> int:
-    # TODO - you fill in here.
-    return 0
+    @functools.lru_cache(None)
+    def max_recursive(start, end):
+        nonlocal coins
+        if start == end:
+            return coins[start]
+
+        return max(coins[start] + min_recursive(start + 1, end), coins[end] + min_recursive(start, end - 1))
+    @functools.lru_cache(None)
+    def min_recursive(start, end):
+        nonlocal coins
+        if start == end:
+            return 0
+
+        return min(max_recursive(start + 1, end), max_recursive(start, end - 1))
+    
+    return max_recursive(0, len(coins) - 1)
 
 
 if __name__ == '__main__':
