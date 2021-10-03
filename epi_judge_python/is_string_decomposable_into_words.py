@@ -6,50 +6,37 @@ from test_framework.test_failure import TestFailure
 from test_framework.test_utils import enable_executor_hook
  
 # 0  3  6  9  0  2
-# bedbathandbeyond.com
-# bed bath and beyond
-# bed bat hand beyond
-TRIE_END = "$"
+# bathandbeyond
+# bath and bat beyond
+# bath and beyond
+# bat hand beyond
 def decompose_into_dictionary_words(domain: str,
                                     dictionary: Set[str]) -> List[str]:
     n = len(domain)
-    trie = {}
-
-    for keyword in dictionary:
-        trie_ptr = trie
-        for key in keyword:
-            if key not in trie_ptr:
-                trie_ptr[key] = {}
-            trie_ptr = trie_ptr[key]
-        trie_ptr["$"] = {}
-
-    
-    def recursive(start: int, decompose: List[str]):
+    @functools.lru_cache(None)
+    def recursive(start: int) -> List[str]:
         nonlocal n
-        nonlocal trie
+        nonlocal domain
+        nonlocal dictionary
 
-        print(start, decompose)
         if start == n:
-            return decompose
+            return []
+        candidates = []
 
-        trie_ptr = trie
+        for i in range(start+1,n+1):
+            if domain[start:i] in dictionary:
+                candidates.append([domain[start:i]] + recursive(i))
+        
+        for candidate in candidates:
+            if "-1" not in candidate[-1]:
+                return candidate
+        return ["-1"]
 
-        for i in range(start, n):
-            if domain[start:i]
-
-        # for i in range(start, n):
-        #     if TRIE_END in trie_ptr:
-        #         r_decompose = recursive(i, decompose + [domain[start:i]])
-        #         if r_decompose:
-        #             return r_decompose
-        #     if domain[i] in trie_ptr:
-        #         trie_ptr = trie_ptr[domain[i]]
-        #     elif TRIE_END not in trie_ptr:
-        #         break
+    result = recursive(0)
+    if "-1" not in result:
+        return result
+    else:
         return []
-
-    return recursive(0, [])
-
 
 @enable_executor_hook
 def decompose_into_dictionary_words_wrapper(executor, domain, dictionary,
